@@ -8,12 +8,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:flutter_app_demo/views/rss_reader/rss_reader_view.dart';
+import 'package:flutter_app_demo/views/navigation_bar.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(RssReaderView());
+    await tester.pumpWidget(NavigationBar());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
