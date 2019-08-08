@@ -7,80 +7,54 @@ import 'package:flutter_app_demo/bloc/rss_reader/rss_reader_bloc.dart';
 import 'package:flutter_app_demo/models/article.dart';
 
 class RssReaderView extends StatelessWidget {
-  final RssReaderBloc bloc = RssReaderBloc();
+  final RssReaderBloc bloc;
 
-  final List<List<String>> siteItems = [
-    [
-      '主なニュース',
-      'https://news.yahoo.co.jp/pickup/rss.xml',
-    ],
-    [
-      '国際ニュース',
-      'https://news.yahoo.co.jp/pickup/world/rss.xml',
-    ],
-    [
-      '国内ニュース',
-      'https://news.yahoo.co.jp/pickup/domestic/rss.xml',
-    ],
-    [
-      '経済関係',
-      'https://news.yahoo.co.jp/pickup/economy/rss.xml',
-    ],
-    [
-      'スポーツ',
-      'https://news.yahoo.co.jp/pickup/sports/rss.xml',
-    ],
-    [
-      'IT関連',
-      'https://news.yahoo.co.jp/pickup/computer/rss.xml',
-    ],
-    [
-      '科学技術',
-      'https://news.yahoo.co.jp/pickup/science/rss.xml',
-    ],
-  ];
+  RssReaderView({@required this.bloc}) {
+    bloc.initView();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        brightness: Brightness.light,
-        primaryColor: Color(0xFF58AB34),
-        accentColor: Color(0xFFF4F4F4),
-      ),
-      home: Scaffold(
-        backgroundColor: Color(0xFFF4F4F4),
-        appBar: _buildAppbar(),
-        body: Column(
-          children: <Widget>[
-            Expanded(
-              child: ListView.builder(
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ArticleListWidget(
-                                bloc: bloc, url: siteItems[index][1])),
-                      );
-                    },
-                    child: Center(
-                      child: Text(siteItems[index][0],
-                          style: TextStyle(fontSize: 26.0)),
-                    ),
-                  );
-                },
-                itemCount: siteItems.length,
-              ),
+    return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
+      appBar: _buildAppbar(context),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: StreamBuilder<List<List<String>>>(
+              stream: bloc.feedItems,
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<List<String>>> snapshot) {
+                print(snapshot.toString());
+                if (!snapshot.hasData) return Container();
+                return ListView.builder(
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ArticleListWidget(
+                                  bloc: bloc, url: snapshot.data[index][1])),
+                        );
+                      },
+                      child: Center(
+                        child: Text(snapshot.data[index][0],
+                            style: TextStyle(fontSize: 26.0)),
+                      ),
+                    );
+                  },
+                  itemCount: snapshot.data.length,
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildAppbar() {
+  Widget _buildAppbar(BuildContext context) {
     return AppBar(
       title: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -91,53 +65,25 @@ class RssReaderView extends StatelessWidget {
           icon: Icon(Icons.settings),
           tooltip: '設定',
           onPressed: () {/*処理*/},
-          color: Colors.green,
+          color: Theme.of(context).primaryColor,
         ),
         IconButton(
           icon: Icon(Icons.settings),
           tooltip: '設定',
           onPressed: () {/*処理*/},
-          color: Colors.green,
+          color: Theme.of(context).primaryColor,
         ),
       ],
     );
   }
 }
 
-class ArticleListWidget extends StatefulWidget {
+class ArticleListWidget extends StatelessWidget {
   final RssReaderBloc bloc;
   final String url;
 
-  ArticleListWidget({@required this.bloc, this.url});
-
-  @override
-  _ArticleListWidgetState createState() => new _ArticleListWidgetState();
-}
-
-class _ArticleListWidgetState extends State<ArticleListWidget> {
-  List<Article> _articles = List<Article>();
-
-  @override
-  void initState() {
-    super.initState();
-
-    widget.bloc.launch(widget.url);
-    widget.bloc.articles.listen((item) {
-      if (item == null || item.length == 0) return;
-
-      _articles.clear();
-
-      setState(() {
-        _articles.addAll(item);
-        print("_articles: " + _articles.toString()); // LOG
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    widget.bloc.dispose();
-    super.dispose();
+  ArticleListWidget({@required this.bloc, this.url}) {
+    bloc.launch(url);
   }
 
   @override
@@ -147,34 +93,40 @@ class _ArticleListWidgetState extends State<ArticleListWidget> {
         title: Text("Articles"),
       ),
       body: Center(
-        child: (_articles == null || _articles.length == 0)
-            ? Center(child: CircularProgressIndicator())
-            : ListView(
-                children: ListTile.divideTiles(
-                  context: context,
-                  tiles: _articles.map(
-                    (article) {
-                      return Card(
-                        child: ListTile(
-                          title: Text(article.title),
-                          subtitle: GestureDetector(
-                            onTap: () {
-                              showCupertinoModalPopup(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return WebView(initialUrl: article.link);
-                                },
-                              );
-                            },
-                            child: Text(article.pubDate,
-                                style: TextStyle(fontSize: 13.0)),
-                          ),
+        child: StreamBuilder<List<Article>>(
+          stream: bloc.articles,
+          builder:
+              (BuildContext context, AsyncSnapshot<List<Article>> snapshot) {
+            if (!snapshot.hasData)
+              return Center(child: CircularProgressIndicator());
+            return ListView(
+              children: ListTile.divideTiles(
+                context: context,
+                tiles: snapshot.data.map(
+                  (article) {
+                    return Card(
+                      child: ListTile(
+                        title: Text(article.title),
+                        subtitle: GestureDetector(
+                          onTap: () {
+                            showCupertinoModalPopup(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return WebView(initialUrl: article.link);
+                              },
+                            );
+                          },
+                          child: Text(article.pubDate,
+                              style: TextStyle(fontSize: 13.0)),
                         ),
-                      );
-                    },
-                  ),
-                ).toList(),
-              ),
+                      ),
+                    );
+                  },
+                ),
+              ).toList(),
+            );
+          },
+        ),
       ),
     );
   }
