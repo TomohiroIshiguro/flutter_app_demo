@@ -4,14 +4,10 @@ import 'package:xml/xml.dart' as xml;
 import 'package:flutter_app_demo/models/article.dart';
 
 class WebLaunch {
-  static final WebLaunch _instance = WebLaunch();
-  static WebLaunch getInstance() {
-    return _instance;
-  }
-
-  Future<List<Article>> getArticles(String $url) async {
+  Future<List<Article>> getArticles(String url) async {
     print("----- WebAPIをコールする"); // LOG
-    final response = await http.get($url);
+    print("url: ${url}");
+    final response = await http.get(url);
     switch (response.statusCode) {
       case 200:
         print("-- 成功"); // LOG
