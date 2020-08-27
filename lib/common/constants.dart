@@ -10,13 +10,12 @@ class FEED_LABEL {
 }
 
 class FEED_URL {
-  static final BASE_URL = "https://news.yahoo.co.jp/pickup/";
-  static final FILE_NAME = "/rss.xml";
-  static final NEWS = "pickup";
-  static final WORLD = "world";
-  static final DOMESTIC = "domestic";
-  static final ECONOMY = "economy";
-  static final SPORTS = "sports";
-  static final COMPUTER = "computer";
-  static final SCIENCE = "science";
+  static final BASE_URL = "https://news.yahoo.co.jp/rss/";
+  static final NEWS = "topics/top-picks.xml";
+  static final WORLD = "topics/world.xml";
+  static final DOMESTIC = "topics/domestic.xml";
+  static final ECONOMY = "topics/business.xml";
+  static final SPORTS = "topics/sports.xml";
+  static final COMPUTER = "topics/it.xml";
+  static final SCIENCE = "topics/science.xml";
 }

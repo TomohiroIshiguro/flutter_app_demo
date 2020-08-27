@@ -30,8 +30,7 @@ class RssReaderView extends StatelessWidget {
               stream: bloc.feedItems,
               builder: (BuildContext context,
                   AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
-                print(snapshot.toString());
-                if (!snapshot.hasData) return const CircularProgressIndicator();
+                if (!snapshot.hasData) return Container();
                 return ListView.builder(
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
@@ -40,7 +39,7 @@ class RssReaderView extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => ArticleListWidget(
-                                  bloc: bloc, url: snapshot.data[index]["name"])),
+                                  bloc: bloc, url: snapshot.data[index]["url"])),
                         );
                       },
                       child: Center(

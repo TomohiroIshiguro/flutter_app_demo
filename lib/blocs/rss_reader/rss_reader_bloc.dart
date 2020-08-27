@@ -27,31 +27,31 @@ class RssReaderBloc {
   final List<Map<String, dynamic>> _feedItemList = [
     {
       "label": FEED_LABEL.NEWS,
-      "name": FEED_URL.BASE_URL + FEED_URL.NEWS + FEED_URL.FILE_NAME,
+      "url": FEED_URL.BASE_URL + FEED_URL.NEWS,
     },
     {
       "label": FEED_LABEL.WORLD,
-      "name": FEED_URL.BASE_URL + FEED_URL.WORLD + FEED_URL.FILE_NAME,
+      "url": FEED_URL.BASE_URL + FEED_URL.WORLD,
     },
     {
       "label": FEED_LABEL.DOMESTIC,
-      "name": FEED_URL.BASE_URL + FEED_URL.DOMESTIC + FEED_URL.FILE_NAME,
+      "url": FEED_URL.BASE_URL + FEED_URL.DOMESTIC,
     },
     {
       "label": FEED_LABEL.ECONOMY,
-      "name": FEED_URL.BASE_URL + FEED_URL.ECONOMY + FEED_URL.FILE_NAME,
+      "url": FEED_URL.BASE_URL + FEED_URL.ECONOMY,
     },
     {
       "label": FEED_LABEL.SPORTS,
-      "name": FEED_URL.BASE_URL + FEED_URL.SPORTS + FEED_URL.FILE_NAME,
+      "url": FEED_URL.BASE_URL + FEED_URL.SPORTS,
     },
     {
       "label": FEED_LABEL.COMPUTER,
-      "name": FEED_URL.BASE_URL + FEED_URL.COMPUTER + FEED_URL.FILE_NAME,
+      "url": FEED_URL.BASE_URL + FEED_URL.COMPUTER,
     },
     {
       "label": FEED_LABEL.SCIENCE,
-      "name": FEED_URL.BASE_URL + FEED_URL.SCIENCE + FEED_URL.FILE_NAME,
+      "url": FEED_URL.BASE_URL + FEED_URL.SCIENCE,
     },
   ];
 
