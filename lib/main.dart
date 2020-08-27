@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'bloc/rss_reader/rss_reader_bloc.dart';
+import 'blocs/rss_reader/rss_reader_bloc.dart';
 import 'views/rss_reader/rss_reader_view.dart';
 
 void main() {
@@ -34,14 +34,6 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
   @override
-  void initState() {
-    super.initState();
-
-    new Future.delayed(const Duration(seconds: 3))
-        .then((value) => handleTimeout());
-  }
-
-  @override
   Widget build(BuildContext context) {
     return new Scaffold(
       body: new Center(
@@ -49,6 +41,14 @@ class _SplashState extends State<Splash> {
         child: const CircularProgressIndicator(),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    new Future.delayed(const Duration(seconds: 3))
+        .then((value) => handleTimeout());
   }
 
   void handleTimeout() {

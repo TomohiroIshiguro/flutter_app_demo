@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:webview_flutter/webview_flutter.dart';
 
-import 'package:flutter_app_demo/bloc/rss_reader/rss_reader_bloc.dart';
+import 'package:flutter_app_demo/blocs/rss_reader/rss_reader_bloc.dart';
 import 'package:flutter_app_demo/models/article.dart';
 
 class RssReaderView extends StatelessWidget {
@@ -14,6 +14,11 @@ class RssReaderView extends StatelessWidget {
   }
 
   @override
+  dispose() {
+    bloc.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
@@ -21,12 +26,12 @@ class RssReaderView extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Expanded(
-            child: StreamBuilder<List<List<String>>>(
+            child: StreamBuilder<List<Map<String, dynamic>>>(
               stream: bloc.feedItems,
               builder: (BuildContext context,
-                  AsyncSnapshot<List<List<String>>> snapshot) {
+                  AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
                 print(snapshot.toString());
-                if (!snapshot.hasData) return Container();
+                if (!snapshot.hasData) return const CircularProgressIndicator();
                 return ListView.builder(
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
@@ -35,11 +40,11 @@ class RssReaderView extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => ArticleListWidget(
-                                  bloc: bloc, url: snapshot.data[index][1])),
+                                  bloc: bloc, url: snapshot.data[index]["name"])),
                         );
                       },
                       child: Center(
-                        child: Text(snapshot.data[index][0],
+                        child: Text(snapshot.data[index]["label"],
                             style: TextStyle(fontSize: 26.0)),
                       ),
                     );
@@ -58,20 +63,20 @@ class RssReaderView extends StatelessWidget {
     return AppBar(
       title: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Image.asset('images/logo.png'),
+        child: Image.asset('images/logo.png', height: 42),
       ),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.settings),
           tooltip: '設定',
           onPressed: () {/*処理*/},
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).accentColor,
         ),
         IconButton(
           icon: Icon(Icons.settings),
           tooltip: '設定',
           onPressed: () {/*処理*/},
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).accentColor,
         ),
       ],
     );
