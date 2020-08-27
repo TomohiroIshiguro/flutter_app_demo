@@ -1,7 +1,7 @@
 import 'package:rxdart/rxdart.dart';
 
 import 'package:flutter_app_demo/common/constants.dart';
-import 'package:flutter_app_demo/data_access/web_launch.dart';
+import 'package:flutter_app_demo/blocs/rss_reader/web_launch.dart';
 import 'package:flutter_app_demo/models/article.dart';
 
 class RssReaderBloc {
