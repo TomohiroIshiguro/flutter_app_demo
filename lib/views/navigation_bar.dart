@@ -4,42 +4,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_demo/views/rss_reader/rss_reader_view.dart';
 
 class NavigationBar extends StatefulWidget {
+  List<Map<String, dynamic>> pages = [
+    {
+      "label": BottomNavigationBarItem(
+          icon: Icon(CupertinoIcons.home), title: Text('Feed')),
+      "page": RssReaderView()
+    },
+    {
+      "label": BottomNavigationBarItem(
+          icon: Icon(CupertinoIcons.home), title: Text('Blank')),
+      "page": Container()
+    }
+  ];
+
   @override
   _NavigationBarState createState() => _NavigationBarState();
 }
 
 class _NavigationBarState extends State<NavigationBar> {
   int _selectedIndex = 0;
-  var bottomItems = <BottomNavigationBarItem>[
-    BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.home), title: Text('Feed')),
-    BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.home), title: Text('Blank')),
-  ];
-
-  Widget _buildCurrentPage(int _selectedIndex) {
-    switch (_selectedIndex) {
-      case 0:
-        return RssReaderView();
-      default:
-        return Container();
-    }
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    List<BottomNavigationBarItem> pageList = [];
+    widget.pages.forEach((el) {pageList.add(el["label"]);});
     return Scaffold(
-      body: _buildCurrentPage(_selectedIndex),
+      body: widget.pages[_selectedIndex]["page"],
       bottomNavigationBar: BottomNavigationBar(
-        items: bottomItems,
+        items: pageList,
         currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        onTap: (int index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
       ),
     );
   }
