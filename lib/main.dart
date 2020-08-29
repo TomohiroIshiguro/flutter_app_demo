@@ -12,6 +12,7 @@ void main() {
       '/top': (_) => new NavigationBar(),
     },
     theme: ThemeData(
+      // アプリケーション全体のテーマを規定する
       brightness: Brightness.light,
       primaryColor: Color(0xFF58AB34),
       accentColor: Color(0xFFF4F4F4),
@@ -42,12 +43,12 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-
+    // 指定した秒が経過したら次の画面に移る
     new Future.delayed(const Duration(seconds: 3))
-        .then((value) => handleTimeout());
+        .then((value) => _nextPage());
   }
 
-  void handleTimeout() {
+  void _nextPage() {
     Navigator.of(context).pushReplacementNamed("/top");
   }
 }
