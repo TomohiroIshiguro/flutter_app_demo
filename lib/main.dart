@@ -2,18 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'blocs/rss_reader/rss_reader_bloc.dart';
-import 'views/rss_reader/rss_reader_view.dart';
+import 'package:flutter_app_demo/views/navigation_bar.dart';
 
 void main() {
-
-  RssReaderBloc rssReaderBloc = RssReaderBloc();
-
   runApp(new MaterialApp(
     title: 'Navigation with Routes',
     routes: <String, WidgetBuilder>{
       '/': (_) => new Splash(),
-      '/home': (_) => new RssReaderView(bloc:rssReaderBloc),
+      '/top': (_) => new NavigationBar(),
     },
     theme: ThemeData(
       brightness: Brightness.light,
@@ -52,6 +48,6 @@ class _SplashState extends State<Splash> {
   }
 
   void handleTimeout() {
-    Navigator.of(context).pushReplacementNamed("/home");
+    Navigator.of(context).pushReplacementNamed("/top");
   }
 }

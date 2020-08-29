@@ -13,6 +13,8 @@ class _NavigationBarState extends State<NavigationBar> {
   var bottomItems = <BottomNavigationBarItem>[
     BottomNavigationBarItem(
         icon: Icon(CupertinoIcons.home), title: Text('Feed')),
+    BottomNavigationBarItem(
+        icon: Icon(CupertinoIcons.home), title: Text('Blank')),
   ];
 
   Widget _buildCurrentPage(int _selectedIndex) {
