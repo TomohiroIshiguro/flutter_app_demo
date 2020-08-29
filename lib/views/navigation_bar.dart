@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_app_demo/views/rss_reader/rss_reader_view.dart';
+import 'package:flutter_app_demo/views/qrcode_reader/qrcode_reader_view.dart';
 
 class NavigationBar extends StatefulWidget {
   final List<Map<String, dynamic>> pages = [
@@ -9,6 +10,11 @@ class NavigationBar extends StatefulWidget {
       "label": BottomNavigationBarItem(
           icon: Icon(CupertinoIcons.home), title: Text('Feed')),
       "page": RssReaderView()
+    },
+    {
+      "label": BottomNavigationBarItem(
+          icon: Icon(CupertinoIcons.photo_camera), title: Text('QR Code')),
+      "page": QrCodeReaderView()
     },
     {
       "label": BottomNavigationBarItem(

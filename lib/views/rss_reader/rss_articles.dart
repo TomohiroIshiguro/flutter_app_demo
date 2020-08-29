@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 import 'package:flutter_app_demo/blocs/rss_reader/rss_reader_bloc.dart';
 import 'package:flutter_app_demo/models/article.dart';
+
+import 'package:webview_flutter/webview_flutter.dart';
 
 class ArticleListWidget extends StatelessWidget {
   final RssReaderBloc bloc;
