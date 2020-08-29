@@ -7,8 +7,7 @@ import 'package:flutter_app_demo/views/rss_reader/rss_articles.dart';
 class RssReaderView extends StatelessWidget {
   final RssReaderBloc bloc = new RssReaderBloc();
 
-  RssReaderView() {
-  }
+  RssReaderView();
 
   dispose() {
     bloc.dispose();

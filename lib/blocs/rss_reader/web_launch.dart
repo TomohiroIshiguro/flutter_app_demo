@@ -6,7 +6,7 @@ import 'package:flutter_app_demo/models/article.dart';
 class WebLaunch {
   Future<List<Article>> getArticles(String url) async {
     print("----- WebAPIをコールする"); // LOG
-    print("url: ${url}");
+    print("url: " + url);
     final response = await http.get(url);
     switch (response.statusCode) {
       case 200:
