@@ -19,44 +19,23 @@ class RssReaderView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: _buildAppbar(context),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: StreamBuilder<List<Map<String, dynamic>>>(
-              stream: bloc.feedItems,
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
-                print(snapshot);
-                if (!snapshot.hasData) return Container();
-                return ListView.builder(
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ArticleListWidget(
-                                  bloc: bloc, url: snapshot.data[index]["url"])),
-                        );
-                      },
-                      child: Card(
-                        child: ListTile(
-                          title: Text(snapshot.data[index]["label"],
-                        style: TextStyle(fontSize: 26.0)),
-                        ),
-                      )
-                    );
-                  },
-                  itemCount: snapshot.data.length,
-                );
-              },
-            ),
-          ),
-        ],
+      body: StreamBuilder<List<Map<String, dynamic>>>(
+        stream: bloc.feedItems,
+        builder: (BuildContext context,
+            AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+          if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
+          return ListView.builder(
+            itemCount: snapshot.data.length,
+            itemBuilder: (BuildContext context, int index) {
+              return FeedItemTile(bloc, snapshot.data[index]);
+            },
+          );
+        },
       ),
     );
   }
 
+  // RSSリーダー ビューのAppBar(画面上部)
   Widget _buildAppbar(BuildContext context) {
     return AppBar(
       title: Padding(
@@ -77,6 +56,36 @@ class RssReaderView extends StatelessWidget {
           color: Theme.of(context).accentColor,
         ),
       ],
+    );
+  }
+}
+
+class FeedItemTile extends StatelessWidget {
+  RssReaderBloc _bloc;
+  Map<String, dynamic> _item;
+
+  FeedItemTile(RssReaderBloc bloc, Map<String, dynamic> item){
+    _bloc = bloc;
+    _item = item;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ArticleListWidget(
+                    bloc: _bloc, url: _item["url"])),
+          );
+        },
+        child: Card(
+          child: ListTile(
+            title: Text(_item["label"],
+                style: TextStyle(fontSize: 26.0)),
+          ),
+        )
     );
   }
 }

@@ -26,33 +26,42 @@ class ArticleListWidget extends StatelessWidget {
               (BuildContext context, AsyncSnapshot<List<Article>> snapshot) {
             if (!snapshot.hasData)
               return Center(child: CircularProgressIndicator());
-            return ListView(
-              children: ListTile.divideTiles(
-                context: context,
-                tiles: snapshot.data.map(
-                      (article) {
-                    return Card(
-                      child: ListTile(
-                        title: Text(article.title),
-                        subtitle: GestureDetector(
-                          onTap: () {
-                            showCupertinoModalPopup(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return WebView(initialUrl: article.link);
-                              },
-                            );
-                          },
-                          child: Text(article.pubDate,
-                              style: TextStyle(fontSize: 13.0)),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ).toList(),
+            return ListView.builder(
+              itemCount: snapshot.data.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ArticleTile(snapshot.data[index]);
+              }
             );
           },
+        ),
+      ),
+    );
+  }
+}
+
+class ArticleTile extends StatelessWidget {
+  Article _article;
+
+  ArticleTile(Article article) {
+    _article = article;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        title: Text(_article.title),
+        subtitle: GestureDetector(
+          onTap: () {
+            showCupertinoModalPopup(
+              context: context,
+              builder: (BuildContext context) {
+                return WebView(initialUrl: _article.link);
+              },
+            );
+          },
+          child: Text(_article.pubDate,
+              style: TextStyle(fontSize: 13.0)),
         ),
       ),
     );
