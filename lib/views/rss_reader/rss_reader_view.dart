@@ -8,7 +8,6 @@ class RssReaderView extends StatelessWidget {
   final RssReaderBloc bloc = new RssReaderBloc();
 
   RssReaderView() {
-    bloc.initView();
   }
 
   dispose() {
