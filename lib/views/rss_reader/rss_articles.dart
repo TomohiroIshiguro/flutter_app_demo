@@ -40,7 +40,7 @@ class ArticleListWidget extends StatelessWidget {
 }
 
 class ArticleTile extends StatelessWidget {
-  static Article _article;
+  Article _article;
 
   ArticleTile(Article article) {
     _article = article;
@@ -48,6 +48,7 @@ class ArticleTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(_article.title + " --- " + _article.link);
     return Card(
       child: ListTile(
         title: Text(_article.title),

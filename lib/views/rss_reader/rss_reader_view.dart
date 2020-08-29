@@ -60,8 +60,8 @@ class RssReaderView extends StatelessWidget {
 }
 
 class FeedItemTile extends StatelessWidget {
-  static RssReaderBloc _bloc;
-  static Map<String, dynamic> _item;
+  RssReaderBloc _bloc;
+  Map<String, dynamic> _item;
 
   FeedItemTile(RssReaderBloc bloc, Map<String, dynamic> item){
     _bloc = bloc;
