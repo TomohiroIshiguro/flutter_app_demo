@@ -16,26 +16,14 @@ class RssReaderView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      appBar: _buildAppbar(context),
-      body: StreamBuilder<List<Map<String, dynamic>>>(
-        stream: bloc.feedItems,
-        builder: (BuildContext context,
-            AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
-          if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
-          return ListView.builder(
-            itemCount: snapshot.data.length,
-            itemBuilder: (BuildContext context, int index) {
-              return FeedItemTile(bloc, snapshot.data[index]);
-            },
-          );
-        },
-      ),
+      appBar: _buildAppBar(context),
+      body: _buildBody(context),
+      backgroundColor: Theme.of(context).backgroundColor
     );
   }
 
-  // RSSリーダー ビューのAppBar(画面上部)
-  Widget _buildAppbar(BuildContext context) {
+  // RSSリーダー ビューのappBar(画面上部)
+  Widget _buildAppBar(BuildContext context) {
     return AppBar(
       title: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -57,6 +45,25 @@ class RssReaderView extends StatelessWidget {
       ],
     );
   }
+
+  // RSSリーダー ビューのbody
+  Widget _buildBody(BuildContext context) {
+    return StreamBuilder<List<Map<String, dynamic>>>(
+      stream: bloc.feedItems,
+      builder: (BuildContext context,
+          AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+        if (!snapshot.hasData) {
+          return Center(child: CircularProgressIndicator());
+        }
+        return ListView.builder(
+          itemCount: snapshot.data.length,
+          itemBuilder: (BuildContext context, int index) {
+            return FeedItemTile(bloc, snapshot.data[index]);
+          },
+        );
+      },
+    );
+  }
 }
 
 class FeedItemTile extends StatelessWidget {
@@ -71,20 +78,20 @@ class FeedItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ArticleListWidget(
-                    bloc: _bloc, url: _item["url"])),
-          );
-        },
-        child: Card(
-          child: ListTile(
-            title: Text(_item["label"],
-                style: TextStyle(fontSize: 26.0)),
-          ),
-        )
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ArticleListWidget(
+                  bloc: _bloc, url: _item["url"])),
+        );
+      },
+      child: Card(
+        child: ListTile(
+          title: Text(_item["label"],
+              style: TextStyle(fontSize: 26.0)),
+        ),
+      )
     );
   }
 }

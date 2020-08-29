@@ -16,25 +16,34 @@ class ArticleListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Articles"),
-      ),
-      body: Center(
-        child: StreamBuilder<List<Article>>(
-          stream: bloc.articles,
-          builder:
-              (BuildContext context, AsyncSnapshot<List<Article>> snapshot) {
-            if (!snapshot.hasData)
-              return Center(child: CircularProgressIndicator());
-            return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ArticleTile(snapshot.data[index]);
-              }
-            );
-          },
-        ),
-      ),
+        appBar: _buildAppBar(context),
+        body: _buildBody(context)
+    );
+  }
+
+  // appBar (画面上部)
+  Widget _buildAppBar(BuildContext context) {
+    return AppBar(
+      title: Text("Articles"),
+    );
+  }
+
+  // body
+  Widget _buildBody(BuildContext context) {
+    return StreamBuilder<List<Article>>(
+      stream: bloc.articles,
+      builder:
+          (BuildContext context, AsyncSnapshot<List<Article>> snapshot) {
+        if (!snapshot.hasData) {
+          return Center(child: CircularProgressIndicator());
+        }
+        return ListView.builder(
+          itemCount: snapshot.data.length,
+          itemBuilder: (BuildContext context, int index) {
+            return ArticleTile(snapshot.data[index]);
+          }
+        );
+      },
     );
   }
 }
@@ -58,9 +67,7 @@ class ArticleTile extends StatelessWidget {
               context: context,
               builder: (BuildContext context) {
                 return Scaffold(
-                  appBar: AppBar(
-                    title: Text("Web"),
-                  ),
+                  appBar: AppBar(),
                   body: WebView(initialUrl: _article.link)
                 );
               },
