@@ -56,7 +56,12 @@ class ArticleTile extends StatelessWidget {
             showCupertinoModalPopup(
               context: context,
               builder: (BuildContext context) {
-                return WebView(initialUrl: _article.link);
+                return Scaffold(
+                  appBar: AppBar(
+                    title: Text("Web"),
+                  ),
+                  body: WebView(initialUrl: _article.link)
+                );
               },
             );
           },
