@@ -5,13 +5,12 @@ import 'package:flutter_app_demo/blocs/rss_reader/rss_reader_bloc.dart';
 import 'package:flutter_app_demo/views/rss_reader/rss_articles.dart';
 
 class RssReaderView extends StatelessWidget {
-  final RssReaderBloc bloc;
+  final RssReaderBloc bloc = new RssReaderBloc();
 
-  RssReaderView({@required this.bloc}) {
+  RssReaderView() {
     bloc.initView();
   }
 
-  @override
   dispose() {
     bloc.dispose();
   }
@@ -28,6 +27,7 @@ class RssReaderView extends StatelessWidget {
               stream: bloc.feedItems,
               builder: (BuildContext context,
                   AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+                print(snapshot);
                 if (!snapshot.hasData) return Container();
                 return ListView.builder(
                   itemBuilder: (BuildContext context, int index) {
@@ -40,10 +40,12 @@ class RssReaderView extends StatelessWidget {
                                   bloc: bloc, url: snapshot.data[index]["url"])),
                         );
                       },
-                      child: Center(
-                        child: Text(snapshot.data[index]["label"],
-                            style: TextStyle(fontSize: 26.0)),
-                      ),
+                      child: Card(
+                        child: ListTile(
+                          title: Text(snapshot.data[index]["label"],
+                        style: TextStyle(fontSize: 26.0)),
+                        ),
+                      )
                     );
                   },
                   itemCount: snapshot.data.length,
