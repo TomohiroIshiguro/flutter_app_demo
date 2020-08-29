@@ -40,7 +40,7 @@ class ArticleListWidget extends StatelessWidget {
 }
 
 class ArticleTile extends StatelessWidget {
-  Article _article;
+  static Article _article;
 
   ArticleTile(Article article) {
     _article = article;
