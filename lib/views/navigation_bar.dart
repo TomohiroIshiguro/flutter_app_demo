@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_demo/views/rss_reader/rss_reader_view.dart';
 
 class NavigationBar extends StatefulWidget {
-  List<Map<String, dynamic>> pages = [
+  final List<Map<String, dynamic>> pages = [
     {
       "label": BottomNavigationBarItem(
           icon: Icon(CupertinoIcons.home), title: Text('Feed')),
