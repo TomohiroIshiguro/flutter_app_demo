@@ -7,7 +7,7 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_app_demo/views/side_drawer.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_app_demo/views/qrcode_reader/video_player.dart';
 
 class QrCodeReaderView extends StatefulWidget {
   @override
@@ -67,12 +67,6 @@ class _QrCodeReaderViewState extends State<QrCodeReaderView> {
 
   // QRコード リーダー ビューのbody
   Widget _buildBody(BuildContext context) {
-    if (scanResult != null) {
-      print("type: "+scanResult.type.toString());
-      print("rawContent: "+scanResult.rawContent);
-      print("format: "+scanResult.format.toString());
-      print("formatNote: "+scanResult.formatNote);
-    }
     return Column(
       children: <Widget>[
         Card(
@@ -97,12 +91,9 @@ class _QrCodeReaderViewState extends State<QrCodeReaderView> {
         ),
         (scanResult == null)?
         Center(child: Text("ここに結果を表示します")):
-        (RegExp(r"^https?://").hasMatch(scanResult.rawContent))?
+        (RegExp(r"^http[s]?://.*(.mp4|.m3u8)$").hasMatch(scanResult.rawContent))?
           // URLの場合
-          Scaffold(
-              appBar: AppBar(),
-              body: WebView(initialUrl: scanResult.rawContent)
-          ):
+          VideoPlayerComponent(VideoPlayerComponent.URL, scanResult.rawContent):
           // URL以外の場合
           Column(
             children: <Widget>[
