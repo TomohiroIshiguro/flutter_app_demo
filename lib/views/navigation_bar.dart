@@ -31,6 +31,7 @@ class _NavigationBarState extends State<NavigationBar> {
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
+    print("NavigationBar");
     List<BottomNavigationBarItem> pageList = [];
     widget.pages.forEach((el) {pageList.add(el["label"]);});
     return Scaffold(

@@ -32,6 +32,7 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
+    print("Splash");
     return new Scaffold(
       body: new Center(
         // TODO: スプラッシュアニメーション
