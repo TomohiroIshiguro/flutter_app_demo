@@ -28,6 +28,7 @@ dependencies:
   webview_flutter: ^0.3.22+1
   xml: ^3.5.0
   barcode_scan: ^3.0.1
+  video_player: ^0.11.0
 
 dev_dependencies:
   flutter_test:
