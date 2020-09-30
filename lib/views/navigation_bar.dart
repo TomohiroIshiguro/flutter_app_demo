@@ -8,18 +8,18 @@ class NavigationBar extends StatefulWidget {
   final List<Map<String, dynamic>> pages = [
     {
       "label": BottomNavigationBarItem(
-          icon: Icon(CupertinoIcons.home), title: Text('Feed')),
-      "page": RssReaderView()
+          icon: const Icon(CupertinoIcons.home), title: const Text('Feed')),
+      "page": new RssReaderView()
     },
     {
       "label": BottomNavigationBarItem(
-          icon: Icon(CupertinoIcons.photo_camera), title: Text('QR Code')),
-      "page": QrCodeReaderView()
+          icon: const Icon(CupertinoIcons.photo_camera), title: const Text('QR Code')),
+      "page": new QrCodeReaderView()
     },
     {
       "label": BottomNavigationBarItem(
-          icon: Icon(CupertinoIcons.home), title: Text('Blank')),
-      "page": Container()
+          icon: const Icon(CupertinoIcons.home), title: const Text('Blank')),
+      "page": new Container()
     }
   ];
 

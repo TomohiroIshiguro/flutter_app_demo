@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_demo/blocs/rss_reader/rss_reader_bloc.dart';
 import 'package:flutter_app_demo/models/article.dart';
 
+import 'package:flutter_app_demo/views/side_drawer.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class ArticleListWidget extends StatelessWidget {
@@ -18,6 +19,7 @@ class ArticleListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: _buildAppBar(context),
+        endDrawer: SideDrawer(),
         body: _buildBody(context)
     );
   }

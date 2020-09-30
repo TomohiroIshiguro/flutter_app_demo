@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'package:flutter_app_demo/views/side_drawer.dart';
 import 'package:flutter_app_demo/blocs/rss_reader/rss_reader_bloc.dart';
 import 'package:flutter_app_demo/views/rss_reader/rss_articles.dart';
 
@@ -17,6 +18,7 @@ class RssReaderView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(context),
+      endDrawer: SideDrawer(),
       body: _buildBody(context),
       backgroundColor: Theme.of(context).backgroundColor
     );
@@ -29,20 +31,6 @@ class RssReaderView extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Image.asset('images/logo.png', height: 42),
       ),
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.settings),
-          tooltip: '設定',
-          onPressed: () {/*処理*/},
-          color: Theme.of(context).accentColor,
-        ),
-        IconButton(
-          icon: Icon(Icons.settings),
-          tooltip: '設定',
-          onPressed: () {/*処理*/},
-          color: Theme.of(context).accentColor,
-        ),
-      ],
     );
   }
 

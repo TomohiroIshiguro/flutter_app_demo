@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'dart:async';
-import 'dart:io' show Platform;
 
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/services.dart';
 
+import 'package:flutter_app_demo/views/side_drawer.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class QrCodeReaderView extends StatefulWidget {
@@ -48,11 +48,10 @@ class _QrCodeReaderViewState extends State<QrCodeReaderView> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: _buildAppBar(context),
+        endDrawer: SideDrawer(),
         body: _buildBody(context)
-      ),
     );
   }
 
@@ -63,20 +62,6 @@ class _QrCodeReaderViewState extends State<QrCodeReaderView> {
         padding: const EdgeInsets.all(8.0),
         child: Image.asset('images/logo.png', height: 42),
       ),
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.settings),
-          tooltip: '設定',
-          onPressed: () {/*処理*/},
-          color: Theme.of(context).accentColor,
-        ),
-        IconButton(
-          icon: Icon(Icons.settings),
-          tooltip: '設定',
-          onPressed: () {/*処理*/},
-          color: Theme.of(context).accentColor,
-        ),
-      ],
     );
   }
 
